@@ -1,27 +1,27 @@
-class WordStoreImp implements WordStore 
+class WordStoreImp implements WordStore
 {
     Node rootNode;
-    public WordStoreImp(int n) 
+    public WordStoreImp(int n)
     {
         rootNode = null;
     }
 
-    public void add(String word) 
+    public void add(String word)
     {
         rootNode = addNode(word, rootNode);
     }
 
-    public int count(String word) 
+    public int count(String word)
     {
         return countNode(word, rootNode);
     }
 
-    public void remove(String word) 
+    public void remove(String word)
     {
-        removeNode(word, rootNode);  
+        removeNode(word, rootNode);
     }
 
-    public Node addNode(String word, Node rootNode) 
+    private Node addNode(String word, Node rootNode)
     {
         if(rootNode == null)
         {
@@ -31,10 +31,10 @@ class WordStoreImp implements WordStore
         {
             rootNode.countWord++;
         }
-        else if(word.compareTo(rootNode.data) < 0) 
+        else if(word.compareTo(rootNode.data) < 0)
         {
             rootNode.left = addNode(word, rootNode.left);
-        } 
+        }
         else
         {
             rootNode.right = addNode(word, rootNode.right);
@@ -42,7 +42,7 @@ class WordStoreImp implements WordStore
         return rootNode;
     }
 
-    public int countNode(String word, Node rootNode) 
+    private int countNode(String word, Node rootNode)
     {
         if(rootNode == null)
         {
@@ -52,17 +52,17 @@ class WordStoreImp implements WordStore
         {
             return rootNode.countWord;
         }
-        else if(word.compareTo(rootNode.data) <= 0) 
+        else if(word.compareTo(rootNode.data) <= 0)
         {
             return countNode(word, rootNode.left);
-        } 
-        else 
+        }
+        else
         {
             return countNode(word, rootNode.right);
         }
     }
 
-    public Node removeNode(String word, Node rootNode) 
+    private Node removeNode(String word, Node rootNode)
     {
         if(rootNode == null)
         {
@@ -72,11 +72,11 @@ class WordStoreImp implements WordStore
         {
             rootNode.countWord--;
         }
-        else if(word.equals(rootNode.data) && rootNode.countWord == 1) 
+        else if(word.equals(rootNode.data) && rootNode.countWord == 1)
         {
             if(rootNode.left != null && rootNode.right != null)//Node has 2 children
             {
-                rootNode.data = min(rootNode.right).data;//minimum element used to replace the root node 
+                rootNode.data = min(rootNode.right).data;//minimum element used to replace the root node
                 removeNode(rootNode.data, rootNode.right);//minimum node removed
             }
             else if(rootNode.left != null && rootNode.right == null)//Node has 1 child on the left
@@ -107,7 +107,7 @@ class WordStoreImp implements WordStore
         return rootNode;
     }
 
-    public Node min(Node node)//finds the smallest elements node in a part of the tree and returns it. Only needs to search the left side of the given node as smallest elements are on the left.
+    private Node min(Node node)//finds the smallest elements node in a part of the tree and returns it. Only needs to search the left side of the given node as smallest elements are on the left.
     {
         if(node.left == null)
         {
@@ -119,28 +119,28 @@ class WordStoreImp implements WordStore
         }
     }
 
-    public Node getNode()
+    private Node getNode()
     {
         return rootNode;
     }
 
-    public static void print(Node node) 
-    {  
+    public static void print(Node node)
+    {
         if(node != null)
         {
             print(node.left);
             System.out.print(node.data + " ");
             print(node.right);
-        }   
-    } 
+        }
+    }
 
-    class Node
+    private class Node
     {
         public String data;
         public Node left;
         public Node right;
         public int countWord;
-        public Node(String word) 
+        public Node(String word)
         {
             this.data = word;
             left = null;
